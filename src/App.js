@@ -1,25 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    return (
+        <>
+            <div className="py-5 bg-dark text-light h2">
+                <div className="container">
+                    { process.env.REACT_APP_TITLE }
+                </div>
+            </div>
+        </>
+    );
+
 }
 
 export default App;
