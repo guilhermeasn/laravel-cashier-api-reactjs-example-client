@@ -36,6 +36,8 @@ const CardFormElement = ({ onSave = result => {} }) => {
 
         onSave(result);
 
+        setTimeout(() => setButtonEnabled(true), 3000);
+
     }
 
     return (

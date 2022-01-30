@@ -17,8 +17,7 @@ import {
 import { BsFillCreditCardFill } from 'react-icons/bs';
 import { FaTimes } from 'react-icons/fa';
 
-import { Modal } from 'react-bootstrap';
-import CardForm from '../stripe/CardForm';
+import { ModalNewCard } from './modals';
 
 
 const CardInfo = ({ brand, last4, exp, onDel = () => {} }) => <>
@@ -49,21 +48,6 @@ const CardInfo = ({ brand, last4, exp, onDel = () => {} }) => <>
 
 </>;
 
-const ModalNewCard = ({ show = false, onCancel = () => {}, onSave = result => {} }) => <>
-
-    <Modal centered size='lg' show={ show } onHide={ onCancel }>
-
-        <Modal.Header className='alert alert-primary' closeButton>
-            <Modal.Title className='no-select'>Novo Cartão</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body style={ { minHeight: '200px' } }>
-            <CardForm onSave={ onSave } />
-        </Modal.Body>
-
-    </Modal>
-
-</>;
 
 const Card = () => {
 
@@ -89,6 +73,7 @@ const Card = () => {
         
         if('setupIntent' in result) {
             setWait(true);
+            setModal(false);
             saveMethodPayment(result.setupIntent.payment_method).then(setCardsOrDie);
         } else if('error' in result) alert(result.error.message);
         else alert('Não foi possível salvar o cartão!');
@@ -143,10 +128,7 @@ const Card = () => {
         <ModalNewCard
             show={ modal }
             onCancel={ () => setModal(false) }
-            onSave={ result => {
-                setModal(false);
-                newCard(result);
-            } }
+            onSave={ newCard }
         />
 
     </>;
