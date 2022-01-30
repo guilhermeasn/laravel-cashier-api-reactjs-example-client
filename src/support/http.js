@@ -19,6 +19,7 @@ export const CRUD = async (mode, path = [], input = {}) => {
         message:  '',
         dataset:  [],
         data:     {},
+        error:    '',
         errors:   {}
     }
 
@@ -60,11 +61,12 @@ export const CRUD = async (mode, path = [], input = {}) => {
         else if(typeof result.response.data === 'object') {
 
             if(typeof result.response.data.message === 'string') result.message = result.response.data.message;
+            if(typeof result.response.data.error   === 'string') result.error   = result.response.data.error;
             if(typeof result.response.data.errors  === 'object') result.errors  = result.response.data.errors;
             if(Array.isArray(result.response.data.dataset))      result.dataset = result.response.data.dataset;
 
             Object.keys(result.response.data).forEach(key => {
-                if(key !== 'message' && key !== 'dataset' && key !== 'errors') {
+                if(key !== 'message' && key !== 'dataset'&& key !== 'error' && key !== 'errors') {
                     result.data = {
                         ...result.data,
                         [key]: result.response.data[key]
