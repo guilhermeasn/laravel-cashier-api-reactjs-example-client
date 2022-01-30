@@ -1,3 +1,5 @@
+import Menu from "./components/Menu";
+
 
 function App() {
 
@@ -10,11 +12,17 @@ function App() {
         </div>
         
         <div className="my-3 container">
-            Em construção ...
+            <Menu items={[
+                'Geral',
+                'Cartão',
+                'Produto',
+                'Assinatura'
+            ]} onSelect={ item => console.log(item) } />
         </div>
 
     </>);
 
 }
+
 
 export default App;
