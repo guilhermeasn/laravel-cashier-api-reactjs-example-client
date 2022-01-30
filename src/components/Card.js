@@ -5,7 +5,8 @@ import {
 
 import {
     getCards,
-    saveMethodPayment
+    saveMethodPayment,
+    deleteMethodPayment
 } from '../stripe/api';
 
 import { List } from './misc';
@@ -17,7 +18,7 @@ import { Modal } from 'react-bootstrap';
 import CardForm from '../stripe/CardForm';
 
 
-const CardInfo = ({ brand, last4, exp }) => <>
+const CardInfo = ({ brand, last4, exp, onDel = () => {} }) => <>
 
     <div className='row text-dark'>
 
@@ -36,7 +37,7 @@ const CardInfo = ({ brand, last4, exp }) => <>
                 className='ms-2 my-1 clickable'
                 size='1.2em'
                 color='#700'
-                onClick={ () => alert('not implemented') }
+                onClick={ onDel }
                 title='Excluir cartão'
             />
         </div>
@@ -65,54 +66,56 @@ const Card = () => {
 
     const [ cards, setCards ] = useState(null);
     const [ modal, setModal ] = useState(false);
+    const [ wait, setWait   ] = useState(true);
 
-    useEffect(() => {
+    function setCardsOrDie({ success, message, error, dataset }) {
 
-        if(!cards) getCards().then(({ success, message, error, dataset }) => {
+        if(success) setCards(dataset);
+        else {
+            if(message) alert(message);
+            if(error)   console.error(error)
+        }
 
-            if(success) setCards(dataset);
-            else {
-                if(message) alert(message);
-                if(error)   console.error(error)
-            }
+        setWait(false);
 
-        });
+    }
 
-    }, [cards]);
+    useEffect(() => { if(!cards) getCards().then(setCardsOrDie); }, [cards]);
 
     function newCard(result) {
-
-        console.dir(result);
         
         if('setupIntent' in result) {
-            saveMethodPayment(result.setupIntent.payment_method).then(({ success, message, error, dataset }) => {
-                if(success) setCards(dataset);
-                else {
-                    if(message) alert(message);
-                    if(error)   console.error(error)
-                }
-            });
-        }
-        
-        else if('error' in result) alert(result.error.message);
+            setWait(true);
+            saveMethodPayment(result.setupIntent.payment_method).then(setCardsOrDie);
+        } else if('error' in result) alert(result.error.message);
         else alert('Não foi possível salvar o cartão!');
+
+    }
+
+    function delCard(ID) {
+        
+        if(window.confirm('Tem certeza que deseja deletar um cartão?')) {
+            setWait(true);
+            deleteMethodPayment(ID).then(setCardsOrDie);
+        }
 
     }
 
     return <>
     
         {
-            (!Array.isArray(cards)) ? <div className='my-5 text-muted'>carregando ...</div>  :
+            (!Array.isArray(cards) || wait) ? <div className='my-5 text-muted'>carregando ...</div>  :
             
             (cards.length > 0) ? (
 
                 <List
-                    dataset={ cards.map(({ card }) => (
+                    dataset={ cards.map(({ id, card }) => (
 
                         <CardInfo
                             brand={ card.brand }
                             last4={ card.last4 }
                             exp={ ('00' + card.exp_month).slice(-2) + '/' + card.exp_year }
+                            onDel={ () => delCard(id) }
                         />
 
                     )) }
