@@ -26,7 +26,7 @@ function App() {
             <Menu
                 items={ [
                     'Geral',
-                    'Cartão',
+                    'Cartões',
                     'Produtos',
                     'Assinaturas'
                 ] }
