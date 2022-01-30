@@ -51,7 +51,7 @@ const General = () => {
                         classChildren='col-12 col-lg-6'
                     />
                     
-                    : <div className='my-5'>carregando ...</div>
+                    : <div className='my-5 text-muted'>carregando ...</div>
             }
         </div>
 
