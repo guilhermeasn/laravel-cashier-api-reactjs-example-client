@@ -27,8 +27,8 @@ function App() {
                 items={ [
                     'Geral',
                     'Cartão',
-                    'Produto',
-                    'Assinatura'
+                    'Produtos',
+                    'Assinaturas'
                 ] }
                 active={ active }
                 onClick={ setActive }
