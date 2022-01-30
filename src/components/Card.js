@@ -3,14 +3,17 @@ import {
     useEffect
 } from 'react';
 
-import { getCards } from '../stripe/api';
+import {
+    getCards,
+    saveMethodPayment
+} from '../stripe/api';
 
 import { List } from './misc';
 
 import { BsFillCreditCardFill } from 'react-icons/bs';
 import { FaTimes } from 'react-icons/fa';
 
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import CardForm from '../stripe/CardForm';
 
 
@@ -18,19 +21,19 @@ const CardInfo = ({ brand, last4, exp }) => <>
 
     <div className='row text-dark'>
 
-        <div className='col-6 col-sm-4 text-nowrap'>
+        <div className='col-6 col-sm-4 text-nowrap py-1 m-0'>
             <BsFillCreditCardFill size='2em' color='#3a113a' />
             <span className='px-2 text-primary h6'>{ brand }</span>
         </div>
 
-        <div className='col-6 col-sm-4 text-nowrap text-end text-sm-center text-muted'>
+        <div className='col-6 col-sm-4 text-nowrap text-end text-sm-center text-muted py-1 m-0'>
             •••• { last4 }
         </div>
 
-        <div className='col-12 col-sm-4 text-nowrap text-end text-warning h6'>
+        <div className='col-12 col-sm-4 text-nowrap text-end text-warning h6 py-1 m-0'>
             Val. { exp }
             <FaTimes
-                className='ms-2 mb-1 clickable'
+                className='ms-2 my-1 clickable'
                 size='1.2em'
                 color='#700'
                 onClick={ () => alert('not implemented') }
@@ -42,7 +45,7 @@ const CardInfo = ({ brand, last4, exp }) => <>
 
 </>;
 
-const ModalNewCard = ({ show = false, onCancel = () => {}, onConfirm = () => {} }) => <>
+const ModalNewCard = ({ show = false, onCancel = () => {}, onSave = result => {} }) => <>
 
     <Modal centered size='lg' show={ show } onHide={ onCancel }>
 
@@ -51,7 +54,7 @@ const ModalNewCard = ({ show = false, onCancel = () => {}, onConfirm = () => {} 
         </Modal.Header>
 
         <Modal.Body style={ { minHeight: '200px' } }>
-            <CardForm />
+            <CardForm onSave={ onSave } />
         </Modal.Body>
 
     </Modal>
@@ -76,6 +79,25 @@ const Card = () => {
         });
 
     }, [cards]);
+
+    function newCard(result) {
+
+        console.dir(result);
+        
+        if('setupIntent' in result) {
+            saveMethodPayment(result.setupIntent.payment_method).then(({ success, message, error, dataset }) => {
+                if(success) setCards(dataset);
+                else {
+                    if(message) alert(message);
+                    if(error)   console.error(error)
+                }
+            });
+        }
+        
+        else if('error' in result) alert(result.error.message);
+        else alert('Não foi possível salvar o cartão!');
+
+    }
 
     return <>
     
@@ -115,6 +137,10 @@ const Card = () => {
         <ModalNewCard
             show={ modal }
             onCancel={ () => setModal(false) }
+            onSave={ result => {
+                setModal(false);
+                newCard(result);
+            } }
         />
 
     </>;

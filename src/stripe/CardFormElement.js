@@ -7,19 +7,22 @@ import {
 } from '@stripe/react-stripe-js';
 
 
-const CardFormElement = () => {
+const CardFormElement = ({ onSave = result => {} }) => {
 
     const stripe   = useStripe();
     const elements = useElements();
 
-    const [ buttonView, setButtonView ] = useState(false);
+    const [ buttonEnabled, setButtonEnabled ] = useState(false);
 
     const submit = async event => {
 
         event.preventDefault();
 
+        setButtonEnabled(false);
+
         if (!stripe || !elements) {
-            console.error('Stripe not ready!')
+            alert('Não foi possível salvar o cartão! Tente novamente!');
+            console.error('Stripe not ready!');
             return;
         }
 
@@ -31,7 +34,7 @@ const CardFormElement = () => {
             redirect: 'if_required'
         });
 
-        console.dir(result);
+        onSave(result);
 
     }
 
@@ -39,10 +42,10 @@ const CardFormElement = () => {
 
         <form onSubmit={ submit }>
 
-            <PaymentElement onReady={ () => setButtonView(true) } />
+            <PaymentElement onReady={ () => setButtonEnabled(true) } />
 
             <div className='border-top mt-3 py-2 text-end'>
-                <button className={ 'btn btn-primary ' + (buttonView ? 'd-inline' : 'd-none') } disabled={ !stripe }>
+                <button className='btn btn-primary' disabled={ !stripe || !buttonEnabled }>
                     Salvar Cartão
                 </button>
             </div>

@@ -11,7 +11,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import CardFormElement from './CardFormElement';
 
 
-const CardForm = () => {
+const CardForm = ({ onSave = result => {} }) => {
 
     const [ stripePromise, setStripePromise ] = useState(null);
     const [ clientIntent, setClientIntent ]   = useState(null);
@@ -43,7 +43,7 @@ const CardForm = () => {
                 theme: 'night',
                 labels: 'floating'
             }
-        } }><CardFormElement /></Elements>
+        } }><CardFormElement onSave={ onSave } /></Elements>
 
     ) : (
 

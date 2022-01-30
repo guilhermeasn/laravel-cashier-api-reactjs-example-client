@@ -16,3 +16,7 @@ export const getCards = async () => await CRUD('READ', [
 export const getIntent = async () => await CRUD('READ', [
     'api', process.env.REACT_APP_CUSTOMER, 'paymentMethod', 'intent'
 ]);
+
+export const saveMethodPayment = async methodPayment => await CRUD('CREATE', [
+    'api', process.env.REACT_APP_CUSTOMER, 'paymentMethod'
+], { ID: methodPayment });
