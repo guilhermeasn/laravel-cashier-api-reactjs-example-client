@@ -33,7 +33,7 @@ export const CRUD = async (mode, path = [], input = {}) => {
     
             default: console.error('The CRUD function only accepts the modes: CREATE, READ, UPDATE or DELETE');
             
-            throw 'Ocorreu um erro inesperado!';
+            throw new Error('Ocorreu um erro inesperado!');
     
         }
 
