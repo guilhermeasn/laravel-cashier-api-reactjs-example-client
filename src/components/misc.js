@@ -16,7 +16,7 @@ export const Loading = ({ dark = false, text = ''}) => {
                 <div></div>
                 <div></div>
             </div>
-            <p className={ 'h3 text-' + theme }> { text } </p>
+            <p className={ 'h5 text-' + theme }> { text } </p>
         </div>
     );
     

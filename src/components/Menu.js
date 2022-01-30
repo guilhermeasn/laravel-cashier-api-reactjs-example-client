@@ -7,7 +7,7 @@ const Menu = ({ items = [], active = 0, onClick = index => {} }) => <>
                 items.map((item, index) => (
                     <span
                         key={ index }
-                        className={ 'nav-item nav-link' + (active === index ? ' active' : '') }
+                        className={ 'nav-item nav-link small-to-small' + (active === index ? ' active' : '') }
                         data-toggle='tab'
                         role='tab'
                         onClick={ () => onClick(index) }
