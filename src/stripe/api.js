@@ -8,3 +8,11 @@ export const getCustomer = async () => await CRUD('READ', [
 export const getStripePortal = async () => await CRUD('CREATE', [
     'api', process.env.REACT_APP_CUSTOMER, 'customer', 'portal'
 ], { return_url: window.location.href });
+
+export const getCards = async () => await CRUD('READ', [
+    'api', process.env.REACT_APP_CUSTOMER, 'paymentMethod'
+]);
+
+export const getIntent = async () => await CRUD('READ', [
+    'api', process.env.REACT_APP_CUSTOMER, 'paymentMethod', 'intent'
+]);

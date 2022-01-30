@@ -7,7 +7,7 @@ import {
 } from '@stripe/react-stripe-js';
 
 
-const Form = () => {
+const CardFormElement = () => {
 
     const stripe   = useStripe();
     const elements = useElements();
@@ -26,7 +26,7 @@ const Form = () => {
         const result = await stripe.confirmSetup({
             elements,
             confirmParams: {
-                return_url: 'http://localhost:3000/confirm',
+                return_url: window.location.href,
             },
             redirect: 'if_required'
         });
@@ -40,9 +40,12 @@ const Form = () => {
         <form onSubmit={ submit }>
 
             <PaymentElement onReady={ () => setButtonView(true) } />
-            <button className={ 'my-2 btn btn-dark ' + (buttonView ? 'd-block' : 'd-none') } disabled={ !stripe }>
-                Pagar
-            </button>
+
+            <div className='border-top mt-3 py-2 text-end'>
+                <button className={ 'btn btn-primary ' + (buttonView ? 'd-inline' : 'd-none') } disabled={ !stripe }>
+                    Salvar Cartão
+                </button>
+            </div>
 
         </form>
 
@@ -50,4 +53,4 @@ const Form = () => {
 
 }
 
-export default Form;
+export default CardFormElement;

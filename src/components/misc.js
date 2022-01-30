@@ -1,4 +1,19 @@
 
+export const List = ({ dataset = [], classRoot = '', classChildren = '' }) => (
+
+    <ul className={ 'list-group ' + classRoot }>
+        {
+            dataset.map((data, index) => (
+                <li key={ index } className={ 'list-group-item ' + classChildren }>
+                    { data }
+                </li>
+            ))
+        }
+    </ul>
+
+);
+
+
 export const Exhibit = ({ data = {}, type = 'info', classRoot = '', classChildren = '' }) => (
 
     <div className={ classRoot }>
