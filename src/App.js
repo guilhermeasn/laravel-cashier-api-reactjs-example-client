@@ -1,4 +1,4 @@
-import Stripe from './stripe';
+// import Stripe from './stripe';
 
 function App() {
 
@@ -11,7 +11,8 @@ function App() {
         </div>
         
         <div className="my-3 container">
-            <Stripe />
+            Em construção ...
+            {/* <Stripe /> */}
         </div>
 
     </>);
