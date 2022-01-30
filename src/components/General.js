@@ -8,7 +8,10 @@ import {
     getStripePortal
 } from '../stripe/api';
 
-import { Exhibit } from './misc';
+import {
+    Exhibit,
+    Loading
+} from './misc';
 
 const General = () => {
 
@@ -51,7 +54,7 @@ const General = () => {
                         classChildren='col-12 col-lg-6'
                     />
                     
-                    : <div className='my-5 text-muted'>carregando ...</div>
+                    : <Loading dark />
             }
         </div>
 

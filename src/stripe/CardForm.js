@@ -10,11 +10,15 @@ import { Elements } from '@stripe/react-stripe-js';
 
 import CardFormElement from './CardFormElement';
 
+import { Loading } from '../components/misc';
+
 
 const CardForm = ({ onSave = result => {} }) => {
 
     const [ stripePromise, setStripePromise ] = useState(null);
     const [ clientIntent, setClientIntent ]   = useState(null);
+
+    const [ wait, setWait ] = useState(true);
 
     useEffect(() => {
 
@@ -23,6 +27,8 @@ const CardForm = ({ onSave = result => {} }) => {
 
                 setStripePromise(loadStripe(STRIPE_KEY))
                 setClientIntent(INTENT);
+
+                setTimeout(() => setWait(false), 5000);
 
             } else {
 
@@ -34,24 +40,24 @@ const CardForm = ({ onSave = result => {} }) => {
 
     }, [stripePromise, clientIntent]);
 
-    return (stripePromise && clientIntent) ? (
+    return (stripePromise && clientIntent) ? <>
 
-        <Elements stripe={ stripePromise } options={ {
-            clientSecret: clientIntent.client_secret,
-            locale: 'pt-BR',
-            appearance: {
-                theme: 'night',
-                labels: 'floating'
-            }
-        } }><CardFormElement onSave={ onSave } /></Elements>
-
-    ) : (
-
-        <div className='text-center text-muted my-5'>
-            carregando ... 
+        <div className={ wait ? '' : 'd-none' }>
+            <Loading dark text='Carregando formulário' />
         </div>
 
-    );
+        <div className={ wait ? 'invisible' : 'visible' }>
+            <Elements stripe={ stripePromise } options={ {
+                clientSecret: clientIntent.client_secret,
+                locale: 'pt-BR',
+                appearance: {
+                    theme: 'night',
+                    labels: 'floating'
+                }
+            } }><CardFormElement onSave={ onSave } /></Elements>
+        </div>
+
+    </> : <Loading dark />;
 
 }
 

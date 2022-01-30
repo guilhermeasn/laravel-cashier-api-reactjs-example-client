@@ -1,4 +1,28 @@
 
+export const Loading = ({ dark = false, text = ''}) => {
+
+    const theme = dark ? 'dark' : 'light';
+
+    return (
+        <div className='text-center mx-auto my-5 p-5'>
+            <div className={ 'lds-grid ' + theme }>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <p className={ 'h3 text-' + theme }> { text } </p>
+        </div>
+    );
+    
+};
+
+
 export const List = ({ dataset = [], classRoot = '', classChildren = '' }) => (
 
     <ul className={ 'list-group ' + classRoot }>

@@ -9,7 +9,10 @@ import {
     deleteMethodPayment
 } from '../stripe/api';
 
-import { List } from './misc';
+import {
+    List,
+    Loading
+} from './misc';
 
 import { BsFillCreditCardFill } from 'react-icons/bs';
 import { FaTimes } from 'react-icons/fa';
@@ -104,7 +107,7 @@ const Card = () => {
     return <>
     
         {
-            (!Array.isArray(cards) || wait) ? <div className='my-5 text-muted'>carregando ...</div>  :
+            (!Array.isArray(cards) || wait) ? <Loading dark />  :
             
             (cards.length > 0) ? (
 
