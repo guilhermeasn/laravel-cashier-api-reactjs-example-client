@@ -22,5 +22,5 @@ export const saveMethodPayment = async methodPayment => await CRUD('CREATE', [
 ], { ID: methodPayment });
 
 export const deleteMethodPayment = async methodPayment => await CRUD('DELETE', [
-    'api', process.env.REACT_APP_CUSTOMER, 'paymentMethod', methodPayment
-]);
+    'api', process.env.REACT_APP_CUSTOMER, 'paymentMethod'
+], { ID: methodPayment });
