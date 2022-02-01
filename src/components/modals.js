@@ -1,16 +1,72 @@
+import { useState } from 'react';
+
 import {
     Button,
-    Modal
+    Modal,
+    Form
 } from 'react-bootstrap';
 
 import CardForm from '../stripe/CardForm';
 
 
-export const ModalNewCharge = ({ show = false, onCancel = () => {}, onConfirm = () => {} }) => <>
+export const ModalNewCharge = ({ show = false, cards = null, onCancel = () => {}, onConfirm = () => {} }) => {
 
+    const preset = {
+        description: '',
+        amount: '',
+        card: '',
+    };
 
+    const [ data, setData ] = useState(preset);
 
-</>;
+    return (
+
+        <Modal centered show={ show } onHide={ () => { onCancel(); setData(preset); } } backdrop='static'>
+
+            <Modal.Header className='alert alert-primary' closeButton>
+                <Modal.Title className='no-select'>Nova Compra</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+
+                <Form>
+
+                    <Form.Control className='mb-3' type="text" placeholder="Descrição do Produto" value={ data.description } onChange={ input => setData({ ...data, description: input.currentTarget.value }) } />
+                    <Form.Control className='mb-3' type="number" placeholder="Valor do Produto" value={ data.amount } onChange={ input => setData({ ...data, amount: input.currentTarget.value }) } />
+
+                    <Form.Select value={ data.card } onChange={ select => setData({ ...data, card: select.currentTarget.value }) }>
+                        {
+
+                            (cards === null) ? <option value='' disabled> carregando ... </option> :
+                            
+                            (Array.isArray(cards) && cards.length > 0) ? <>
+
+                                <option value='' disabled> --- Selecione um cartão --- </option>
+
+                                { cards.map((card, index) => (
+                                    <option key={ index } value={ card.id }>{ card.description }</option>
+                                )) }
+
+                            </> : <option value='' disabled> --- Nenhum cartão salvo --- </option>
+
+                        }
+                    </Form.Select>
+
+                </Form>
+
+            </Modal.Body>
+
+            <Modal.Header className='border-top d-flex justify-content-end mt-3'>
+                <Button variant='primary' className='mx-2' onClick={ () => onConfirm(data) } disabled={ Object.values(data).some(v => !v) }>
+                    Pagar
+                </Button>
+            </Modal.Header>
+
+        </Modal>
+
+    );
+
+};
 
 export const ModalNewCard = ({ show = false, onCancel = () => {}, onSave = result => {}, onAlert = () => {} }) => <>
 

@@ -17,14 +17,18 @@ export const getIntent = async abortSignal => await CRUD('READ', [
     'api', process.env.REACT_APP_CUSTOMER, 'paymentMethod', 'intent'
 ], {}, { signal: abortSignal });
 
-export const saveMethodPayment = async (methodPayment, abortSignal) => await CRUD('CREATE', [
+export const saveMethodPayment = async methodPayment => await CRUD('CREATE', [
     'api', process.env.REACT_APP_CUSTOMER, 'paymentMethod'
-], { ID: methodPayment }, { signal: abortSignal });
+], { ID: methodPayment });
 
-export const deleteMethodPayment = async (methodPayment, abortSignal) => await CRUD('DELETE', [
+export const deleteMethodPayment = async methodPayment => await CRUD('DELETE', [
     'api', process.env.REACT_APP_CUSTOMER, 'paymentMethod'
-], { ID: methodPayment }, { signal: abortSignal });
+], { ID: methodPayment });
 
 export const getCharges = async abortSignal => await CRUD('READ', [
     'api', process.env.REACT_APP_CUSTOMER, 'singleCharge'
 ], {}, { signal: abortSignal });
+
+export const charge = async (description, price, method) => await CRUD('CREATE', [
+    'api', process.env.REACT_APP_CUSTOMER, 'singleCharge'
+], { description, price, method })
