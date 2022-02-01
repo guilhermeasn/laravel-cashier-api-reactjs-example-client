@@ -3,6 +3,9 @@ import { initialize } from 'crud-http';
 
 export const CRUD = initialize({
 
-    base_url: process.env.REACT_APP_SERVER
+    baseURL: process.env.REACT_APP_SERVER,
+    headers: {
+        Accept: 'application/json',
+    }
 
 });

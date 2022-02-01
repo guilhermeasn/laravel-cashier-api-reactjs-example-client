@@ -21,7 +21,7 @@ const CardFormElement = ({ onConfirm = () => {}, onSave = result => {} }) => {
         setButtonEnabled(false);
 
         if (!stripe || !elements) {
-            onConfirm('danger', 'Não foi possível salvar o cartão! Tente novamente!');
+            onConfirm('Não foi possível salvar o cartão! Tente novamente!');
             console.error('Stripe not ready!');
             return;
         }

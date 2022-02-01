@@ -59,7 +59,7 @@ const Card = ({ onConfirm = () => {} }) => {
 
         if(success) setCards(dataset);
         else {
-            if(message) onConfirm('danger', message);
+            if(message) onConfirm(message);
             if(error)   console.error(error)
         }
 
@@ -75,14 +75,14 @@ const Card = ({ onConfirm = () => {} }) => {
             setWait(true);
             setModal(false);
             saveMethodPayment(result.setupIntent.payment_method).then(setCardsOrDie);
-        } else if('error' in result) onConfirm('danger', result.error.message);
-        else onConfirm('danger', 'Não foi possível salvar o cartão!');
+        } else if('error' in result) onConfirm(result.error.message);
+        else onConfirm('Não foi possível salvar o cartão!');
 
     }
 
     function delCard(ID) {
 
-        onConfirm('warning', 'Tem certeza que deseja deletar um cartão?', () => {
+        onConfirm('Tem certeza que deseja deletar um cartão?', () => {
             setWait(true);
             deleteMethodPayment(ID).then(setCardsOrDie);
         });

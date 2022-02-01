@@ -32,7 +32,7 @@ const CardForm = ({ onConfirm = () => {}, onSave = result => {} }) => {
 
             } else {
 
-                if(message) onConfirm('danger', message);
+                if(message) onConfirm(message);
                 if(error)   console.error(error)
 
             }

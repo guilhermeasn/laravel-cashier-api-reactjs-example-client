@@ -16,13 +16,12 @@ function App() {
     const [ active, setActive ]   = useState(0);
     const [ confirm, setConfirm ] = useState({
         show: false,
-        type: 'danger',
         message: '',
         onConfirm: null,
     });
 
-    function confirmAction(type = '', message = '', onConfirm = null) {
-        setConfirm({ show: true, type, message, onConfirm });
+    function confirmAction(message = '', onConfirm = null) {
+        setConfirm({ show: true, message, onConfirm });
     }
 
     return <>
@@ -64,8 +63,8 @@ function App() {
         </div>
 
         <ModalConfirm
+            type='danger'
             show={ confirm.show }
-            type={ confirm.type }
             message={ confirm.message }
             onHide={ () => setConfirm({ ...confirm, show: false }) }
             onConfirm={ (typeof confirm.onConfirm === 'function') ? () => {

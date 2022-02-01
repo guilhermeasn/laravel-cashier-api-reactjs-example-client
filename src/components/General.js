@@ -23,7 +23,7 @@ const General = ({ onConfirm = () => {} }) => {
         if(!customer) getCustomer().then(({ success, message, error, data }) => {
             if(success) setCustomer(data.customer);
             else {
-                if(message) onConfirm('danger', message);
+                if(message) onConfirm(message);
                 if(error)   console.error(error)
             }
         });
