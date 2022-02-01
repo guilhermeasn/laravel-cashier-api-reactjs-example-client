@@ -38,7 +38,7 @@ const CardForm = ({ onConfirm = () => {}, onSave = result => {} }) => {
             }
         });
 
-    }, [stripePromise, clientIntent]);
+    });
 
     return (stripePromise && clientIntent) ? <>
 

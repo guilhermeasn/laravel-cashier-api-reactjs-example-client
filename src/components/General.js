@@ -32,7 +32,7 @@ const General = ({ onConfirm = () => {} }) => {
             if(success) setStripePortal(url);
         });
 
-    }, [customer, stripePortal]);
+    });
 
     return <>
 

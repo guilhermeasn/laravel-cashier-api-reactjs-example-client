@@ -67,7 +67,7 @@ const Card = ({ onConfirm = () => {} }) => {
 
     }
 
-    useEffect(() => { if(!cards) getCards().then(setCardsOrDie); }, [cards]);
+    useEffect(() => { if(!cards) getCards().then(setCardsOrDie); });
 
     function newCard(result) {
         
