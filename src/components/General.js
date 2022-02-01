@@ -13,7 +13,7 @@ import {
     Loading
 } from './misc';
 
-const General = () => {
+const General = ({ onConfirm = () => {} }) => {
 
     const [ customer, setCustomer ] = useState(null);
     const [ stripePortal, setStripePortal] = useState(null);
@@ -23,7 +23,7 @@ const General = () => {
         if(!customer) getCustomer().then(({ success, message, error, data }) => {
             if(success) setCustomer(data.customer);
             else {
-                if(message) alert(message);
+                if(message) onConfirm('danger', message);
                 if(error)   console.error(error)
             }
         });

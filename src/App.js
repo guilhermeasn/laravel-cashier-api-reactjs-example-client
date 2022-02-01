@@ -8,10 +8,22 @@ import {
     Subscription
 } from "./components";
 
+import { ModalConfirm } from './components/modals';
+
 
 function App() {
 
-    const [ active, setActive ] = useState(0);
+    const [ active, setActive ]   = useState(0);
+    const [ confirm, setConfirm ] = useState({
+        show: false,
+        type: 'danger',
+        message: '',
+        onConfirm: null,
+    });
+
+    function confirmAction(type = '', message = '', onConfirm = null) {
+        setConfirm({ show: true, type, message, onConfirm });
+    }
 
     return <>
         
@@ -37,10 +49,10 @@ function App() {
             <div className="tab-content py-3">
                 {
 
-                    (active === 0) ? <General />      :
-                    (active === 1) ? <Card />         :
-                    (active === 2) ? <Product />      :
-                    (active === 3) ? <Subscription /> :
+                    (active === 0) ? <General onConfirm={ confirmAction } />      :
+                    (active === 1) ? <Card onConfirm={ confirmAction } />         :
+                    (active === 2) ? <Product onConfirm={ confirmAction } />      :
+                    (active === 3) ? <Subscription onConfirm={ confirmAction } /> :
 
                     <div className='alert alert-danger'>
                         Nenhum recurso selecionado!
@@ -50,6 +62,17 @@ function App() {
             </div>
             
         </div>
+
+        <ModalConfirm
+            show={ confirm.show }
+            type={ confirm.type }
+            message={ confirm.message }
+            onHide={ () => setConfirm({ ...confirm, show: false }) }
+            onConfirm={ (typeof confirm.onConfirm === 'function') ? () => {
+                setConfirm({ ...confirm, show: false });
+                confirm.onConfirm();
+            } : null }
+        />
 
     </>;
 
