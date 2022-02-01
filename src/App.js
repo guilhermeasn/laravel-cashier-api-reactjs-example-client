@@ -8,7 +8,7 @@ import {
     Subscription
 } from "./components";
 
-import { ModalConfirm } from './components/modals';
+import { ModalAlert } from './components/modals';
 
 
 function App() {
@@ -62,7 +62,7 @@ function App() {
             
         </div>
 
-        <ModalConfirm
+        <ModalAlert
             type='danger'
             show={ alert.show }
             message={ alert.message }
