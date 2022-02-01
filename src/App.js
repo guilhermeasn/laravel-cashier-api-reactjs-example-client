@@ -13,15 +13,15 @@ import { ModalConfirm } from './components/modals';
 
 function App() {
 
-    const [ active, setActive ]   = useState(0);
-    const [ confirm, setConfirm ] = useState({
+    const [ active, setActive ] = useState(0);
+    const [ alert, setAlert ]   = useState({
         show: false,
         message: '',
         onConfirm: null,
     });
 
-    function confirmAction(message = '', onConfirm = null) {
-        setConfirm({ show: true, message, onConfirm });
+    function alertAction(message = '', onConfirm = null) {
+        setAlert({ show: true, message, onConfirm });
     }
 
     return <>
@@ -48,10 +48,10 @@ function App() {
             <div className="tab-content py-3">
                 {
 
-                    (active === 0) ? <General onConfirm={ confirmAction } />      :
-                    (active === 1) ? <Card onConfirm={ confirmAction } />         :
-                    (active === 2) ? <Product onConfirm={ confirmAction } />      :
-                    (active === 3) ? <Subscription onConfirm={ confirmAction } /> :
+                    (active === 0) ? <General onAlert={ alertAction } />      :
+                    (active === 1) ? <Card onAlert={ alertAction } />         :
+                    (active === 2) ? <Product onAlert={ alertAction } />      :
+                    (active === 3) ? <Subscription onAlert={ alertAction } /> :
 
                     <div className='alert alert-danger'>
                         Nenhum recurso selecionado!
@@ -64,12 +64,12 @@ function App() {
 
         <ModalConfirm
             type='danger'
-            show={ confirm.show }
-            message={ confirm.message }
-            onHide={ () => setConfirm({ ...confirm, show: false }) }
-            onConfirm={ (typeof confirm.onConfirm === 'function') ? () => {
-                setConfirm({ ...confirm, show: false });
-                confirm.onConfirm();
+            show={ alert.show }
+            message={ alert.message }
+            onHide={ () => setAlert({ ...alert, show: false }) }
+            onConfirm={ (typeof alert.onConfirm === 'function') ? () => {
+                setAlert({ ...alert, show: false });
+                alert.onConfirm();
             } : null }
         />
 

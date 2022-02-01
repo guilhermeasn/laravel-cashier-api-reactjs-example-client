@@ -7,7 +7,7 @@ import {
 } from '@stripe/react-stripe-js';
 
 
-const CardFormElement = ({ onConfirm = () => {}, onSave = result => {} }) => {
+const CardFormElement = ({ onAlert = () => {}, onSave = result => {} }) => {
 
     const stripe   = useStripe();
     const elements = useElements();
@@ -21,7 +21,7 @@ const CardFormElement = ({ onConfirm = () => {}, onSave = result => {} }) => {
         setButtonEnabled(false);
 
         if (!stripe || !elements) {
-            onConfirm('Não foi possível salvar o cartão! Tente novamente!');
+            onAlert('Não foi possível salvar o cartão! Tente novamente!');
             console.error('Stripe not ready!');
             return;
         }

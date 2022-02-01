@@ -31,7 +31,7 @@ const ChargeInfo = ({ amount = 0, description = '', status = '', card_brand = ''
 
 </>;
 
-const Product = (onConfirm = () => {}) => {
+const Product = (onAlert = () => {}) => {
 
     const [ charges, setCharges ] = useState(null);
 
@@ -43,7 +43,7 @@ const Product = (onConfirm = () => {}) => {
             getCharges(abort.signal).then(( { success, message, error, data: { charges} } ) => {
                 if(success) setCharges(charges);
                 else {
-                    if(message) onConfirm(message);
+                    if(message) onAlert(message);
                     if(error) console.log(error);
                 }
             })

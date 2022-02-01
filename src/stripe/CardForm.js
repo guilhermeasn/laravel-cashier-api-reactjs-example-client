@@ -13,7 +13,7 @@ import CardFormElement from './CardFormElement';
 import { Loading } from '../components/misc';
 
 
-const CardForm = ({ onConfirm = () => {}, onSave = result => {} }) => {
+const CardForm = ({ onAlert = () => {}, onSave = result => {} }) => {
 
     const [ stripePromise, setStripePromise ] = useState(null);
     const [ clientIntent, setClientIntent ]   = useState(null);
@@ -35,7 +35,7 @@ const CardForm = ({ onConfirm = () => {}, onSave = result => {} }) => {
 
                 } else {
 
-                    if(message) onConfirm(message);
+                    if(message) onAlert(message);
                     if(error)   console.error(error)
 
                 }
@@ -60,7 +60,7 @@ const CardForm = ({ onConfirm = () => {}, onSave = result => {} }) => {
                     theme: 'night',
                     labels: 'floating'
                 }
-            } }><CardFormElement onConfirm={ onConfirm } onSave={ onSave } /></Elements>
+            } }><CardFormElement onAlert={ onAlert } onSave={ onSave } /></Elements>
         </div>
 
     </> : <Loading dark />;

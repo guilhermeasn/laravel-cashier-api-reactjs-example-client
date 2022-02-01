@@ -6,7 +6,13 @@ import {
 import CardForm from '../stripe/CardForm';
 
 
-export const ModalNewCard = ({ show = false, onCancel = () => {}, onSave = result => {}, onConfirm = () => {} }) => <>
+export const ModalNewCharge = ({ }) => <>
+
+
+
+</>;
+
+export const ModalNewCard = ({ show = false, onCancel = () => {}, onSave = result => {}, onAlert = () => {} }) => <>
 
     <Modal centered size='lg' show={ show } onHide={ onCancel } backdrop='static'>
 
@@ -15,7 +21,7 @@ export const ModalNewCard = ({ show = false, onCancel = () => {}, onSave = resul
         </Modal.Header>
 
         <Modal.Body style={ { minHeight: '200px' } }>
-            <CardForm onConfirm={ onConfirm } onSave={ onSave } />
+            <CardForm onAlert={ onAlert } onSave={ onSave } />
         </Modal.Body>
 
     </Modal>
