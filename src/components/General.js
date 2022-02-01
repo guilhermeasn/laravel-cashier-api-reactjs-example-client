@@ -20,7 +20,9 @@ const General = ({ onConfirm = () => {} }) => {
 
     useEffect(() => {
 
-        if(!customer) getCustomer().then(({ success, message, error, data }) => {
+        const abort = new AbortController();
+
+        if(!customer) getCustomer(abort.signal).then(({ success, message, error, data }) => {
             if(success) setCustomer(data.customer);
             else {
                 if(message) onConfirm(message);
@@ -28,9 +30,11 @@ const General = ({ onConfirm = () => {} }) => {
             }
         });
 
-        if(!stripePortal) getStripePortal().then(({ success, data: { url }}) => {
+        if(!stripePortal) getStripePortal(abort.signal).then(({ success, data: { url }}) => {
             if(success) setStripePortal(url);
         });
+
+        return () => abort.abort();
 
     });
 

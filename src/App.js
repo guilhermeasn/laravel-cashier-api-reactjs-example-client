@@ -38,7 +38,7 @@ function App() {
                 items={ [
                     'Geral',
                     'Cartões',
-                    'Produtos',
+                    'Compras',
                     'Assinaturas'
                 ] }
                 active={ active }

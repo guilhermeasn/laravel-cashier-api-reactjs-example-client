@@ -67,7 +67,16 @@ const Card = ({ onConfirm = () => {} }) => {
 
     }
 
-    useEffect(() => { if(!cards) getCards().then(setCardsOrDie); });
+    useEffect(() => {
+        if(!cards) {
+            
+            const abort = new AbortController();
+            getCards(abort.signal).then(setCardsOrDie);
+
+            return () => abort.abort();
+
+        }
+    });
 
     function newCard(result) {
         

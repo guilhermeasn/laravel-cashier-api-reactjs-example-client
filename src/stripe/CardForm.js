@@ -21,23 +21,29 @@ const CardForm = ({ onConfirm = () => {}, onSave = result => {} }) => {
     const [ wait, setWait ] = useState(true);
 
     useEffect(() => {
+        if(!stripePromise) {
 
-        if(!stripePromise) getIntent().then(({ success, message, error, data: { STRIPE_KEY, INTENT } }) => {
-            if(success) {
+            const abort = new AbortController();
+            
+            getIntent(abort.signal).then(({ success, message, error, data: { STRIPE_KEY, INTENT } }) => {
+                if(success) {
 
-                setStripePromise(loadStripe(STRIPE_KEY))
-                setClientIntent(INTENT);
+                    setStripePromise(loadStripe(STRIPE_KEY))
+                    setClientIntent(INTENT);
 
-                setTimeout(() => setWait(false), 5000);
+                    setTimeout(() => setWait(false), 5000);
 
-            } else {
+                } else {
 
-                if(message) onConfirm(message);
-                if(error)   console.error(error)
+                    if(message) onConfirm(message);
+                    if(error)   console.error(error)
 
-            }
-        });
+                }
+            });
 
+            return () => abort.abort();
+            
+        }
     });
 
     return (stripePromise && clientIntent) ? <>
