@@ -31,4 +31,8 @@ export const getCharges = async abortSignal => await CRUD('READ', [
 
 export const charge = async (description, price, method) => await CRUD('CREATE', [
     'api', process.env.REACT_APP_CUSTOMER, 'singleCharge'
-], { description, price, method })
+], { description, price, method });
+
+export const getSubscriptions = async abortSignal => await CRUD('READ', [
+    'api', process.env.REACT_APP_CUSTOMER, 'subscription'
+], {}, { signal: abortSignal });

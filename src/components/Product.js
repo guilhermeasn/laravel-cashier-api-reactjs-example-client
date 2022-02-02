@@ -95,8 +95,6 @@ const Product = (onAlert = () => {}) => {
 
     }
 
-    if(charges === null) return <Loading dark />;
-
     return <>
     
         { (charges === null) ? <Loading dark /> : (
