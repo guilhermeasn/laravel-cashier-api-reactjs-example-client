@@ -9,6 +9,71 @@ import {
 import CardForm from '../stripe/CardForm';
 
 
+export const ModalNewSubscription = ({ show = false, plans = null, cards = null, onCancel = () => {}, onConfirm = data => {} }) => {
+
+    const [ plan, setPlan ] = useState('');
+    const [ card, setCard ] = useState('');
+
+    return (
+
+        <Modal centered show={ show } onHide={ onCancel } backdrop='static'>
+
+            <Modal.Header className='alert alert-primary' closeButton>
+                <Modal.Title className='no-select'>Nova Assinatura</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+
+                <Form>
+
+                    <Form.Select value={ plan } onChange={ select => setPlan(select.currentTarget.value) } className='mb-3'>
+
+                        { (plans !== null) ? <>
+
+                            <option value='' disabled> --- Selecionar Plano --- </option>
+
+                            { plans.map((plan, index) => (
+                                <option key={ index } value={ plan.id }>{ plan.description }</option>
+                            )) }
+
+                        </> : <option value='' disabled> carregando ... </option> }
+                        
+                    </Form.Select>
+
+                    <Form.Select value={ card } onChange={ select => setCard(select.currentTarget.value) }>
+                        {
+
+                            (cards === null) ? <option value='' disabled> carregando ... </option> :
+                            
+                            (Array.isArray(cards) && cards.length > 0) ? <>
+
+                                <option value='' disabled> --- Selecione um cartão --- </option>
+
+                                { cards.map((card, index) => (
+                                    <option key={ index } value={ card.id }>{ card.description }</option>
+                                )) }
+
+                            </> : <option value='' disabled> --- Nenhum cartão salvo --- </option>
+
+                        }
+                    </Form.Select>
+
+                </Form>
+
+            </Modal.Body>
+
+            <Modal.Header className='border-top d-flex justify-content-end mt-3'>
+                <Button variant='primary' className='mx-2' onClick={ () => onConfirm({ plan, card }) } disabled={ !plan || !card }>
+                    Inscrever-se
+                </Button>
+            </Modal.Header>
+
+        </Modal>
+
+    );
+
+}
+
 export const ModalNewCharge = ({ show = false, cards = null, onCancel = () => {}, onConfirm = () => {} }) => {
 
     const preset = {
