@@ -44,3 +44,7 @@ export const getPlans = async abortSignal => await CRUD('READ', [
 export const subscribe = async (id, method) => await CRUD('CREATE', [
     'api', process.env.REACT_APP_CUSTOMER, 'subscription'
 ], { id, method });
+
+export const cancelSubscribe = async id => await CRUD('DELETE', [
+    'api', process.env.REACT_APP_CUSTOMER, 'subscription'
+], { id });

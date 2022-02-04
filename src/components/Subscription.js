@@ -10,6 +10,7 @@ import {
 import { FaTimes } from 'react-icons/fa';
 
 import {
+    cancelSubscribe,
     getCards,
     getPlans,
     getSubscriptions,
@@ -80,7 +81,11 @@ const Subscription = ({ onAlert = () => {} }) => {
     }
 
     function delSubscription(id) {
-        console.log(id);
+        onAlert('Tem certeza que deseja cancelar esta assinatura?', () => {
+            setWait(true);
+            console.log(id);
+            cancelSubscribe(id).then(loadSubscriptionOrDie);
+        });
     }
 
     useEffect(() => {
@@ -127,9 +132,15 @@ const Subscription = ({ onAlert = () => {} }) => {
 
     return <>
     
-        { (subscriptions === null || wait) ? <Loading dark /> : <>
+        { (subscriptions === null || wait) ? <Loading dark /> : subscriptions.length ? <>
             
             <List dataset={ subscriptions.map(s => SubscriptionInfo(s, delSubscription)) } />
+
+        </> : <>
+            
+        <div className='alert alert-danger my-5 py-4'>
+            Nenhuma assinatura registrada!
+        </div>
 
         </> }
 
