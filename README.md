@@ -1,6 +1,6 @@
 # laravel-cashier-api-reactjs-example | CLIENT
 
-Client of the example of using laravel cashier in a restful api whith reactjs.
+Client of the example of using laravel cashier in a restful api with reactjs.
 
 *Cliente do exemplo do uso do laravel cashier em um api restful com reactjs*
 
