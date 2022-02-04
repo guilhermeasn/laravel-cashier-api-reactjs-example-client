@@ -97,7 +97,7 @@ const Product = (onAlert = () => {}) => {
 
     return <>
     
-        { (charges === null) ? <Loading dark /> : (
+        { (charges === null) ? <Loading dark /> : charges.length ? (
 
             <List dataset={
 
@@ -115,6 +115,10 @@ const Product = (onAlert = () => {}) => {
 
             } />
 
+        ) : (
+            <div className='alert alert-danger my-5 py-4'>
+                Nenhuma produto foi comprado!
+            </div>
         ) }
         
         <div className='my-3 border-top py-2 text-end'>

@@ -138,9 +138,9 @@ const Subscription = ({ onAlert = () => {} }) => {
 
         </> : <>
             
-        <div className='alert alert-danger my-5 py-4'>
-            Nenhuma assinatura registrada!
-        </div>
+            <div className='alert alert-danger my-5 py-4'>
+                Nenhuma assinatura registrada!
+            </div>
 
         </> }
 
